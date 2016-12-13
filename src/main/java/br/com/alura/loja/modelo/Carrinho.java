@@ -18,6 +18,16 @@ public class Carrinho {
 	private String cidade;
 	private long id;
 
+	public Carrinho() {}
+	
+	public Carrinho(List<Produto> produtos, String rua, String cidade, long id) {
+		super();
+		this.produtos = produtos;
+		this.rua = rua;
+		this.cidade = cidade;
+		this.id = id;
+	}
+
 	public Carrinho adiciona(Produto produto) {
 		produtos.add(produto);
 		return this;
@@ -41,8 +51,9 @@ public class Carrinho {
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	
+	public String getCidade() {
+		return this.cidade;
 	}
 	
 	public long getId() {
@@ -65,16 +76,23 @@ public class Carrinho {
 
 	public void trocaQuantidade(Produto produto) {
 		for (Iterator iterator = produtos.iterator(); iterator.hasNext();) {
-			Produto p = (Produto) iterator.next();
-			if(p.getId() == produto.getId()) {
-				p.setQuantidade(produto.getQuantidade());
-				return;
+			Produto pr = (Produto) iterator.next();
+			if(pr.getId() == produto.getId()) {
+				pr.setQuantidade(produto.getQuantidade());;
 			}
 		}
 	}
 	
 	public List<Produto> getProdutos() {
 		return produtos;
+	}
+
+	public String toXML() {
+		return new XStream().toXML(this);
+	}
+	
+	public String toJSON() {
+		return new Gson().toJson(this);
 	}
 
 }
